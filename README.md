@@ -9,7 +9,6 @@
 
 ### ✨ 特徴
 - **5,000万字の対話知見**: 膨大なAIとの対話ループから導き出した「刺さる」構成案をカード化。
-- **Gemini 最適化**: Google Geminiの性能を最大限に引き出すプロンプト構造を採用。
 - **アイデアの化学反応**: ジャンル・テーマ・切り口をランダムに掛け合わせ、人間の想像を超えるアイデアを創出します。
 
 ### 🚀 アプリURL
@@ -39,7 +38,6 @@ Copyright (c) 2026 いずまいん / Izumain. All rights reserved.
 
 ### ✨ Features
 - **AI-Driven Insight**: High-quality prompt components derived from over 50 million characters of AI dialogue experience.
-- **Gemini Optimized**: Prompt structures specifically engineered for Google Gemini.
 - **Creative Mixing**: Randomly combine genres, themes, and hooks to spark unique ideas.
 
 No user input is sent externally. Everything is generated locally in your browser.
