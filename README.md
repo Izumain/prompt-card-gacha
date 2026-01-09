@@ -19,10 +19,13 @@
 1. ターゲット・属性・制約を選択します。
 2. 「プロンプト生成」をクリックしてカードを引きます。
 3. 生成されたプロンプトをコピーしてAI（Gemini推奨）に送信してください。
+※本ツールは入力内容を外部送信せず、ブラウザ内で生成します。
+※YouTube / TikTok / Gemini は各社の商標です。本ツールは各社と提携・承認されたものではありません。
 
 ### ⚖️ ライセンス
 Copyright (c) 2026 いずまいん / Izumain. All rights reserved.
 本プロジェクトの著作権は「いずまいん」に帰属します。許可なき再配布や模倣を禁じます。
+※利用条件の詳細は LICENSE をご確認ください。
 
 ---
 
@@ -36,6 +39,9 @@ Copyright (c) 2026 いずまいん / Izumain. All rights reserved.
 - **Gemini Optimized**: Prompt structures specifically engineered for Google Gemini.
 - **Creative Mixing**: Randomly combine genres, themes, and hooks to spark unique ideas.
 
+No user input is sent externally. Everything is generated locally in your browser.
+YouTube, TikTok, and Gemini are trademarks of their respective owners. This project is not affiliated with or endorsed by them.
+
 ### 🚀 App URL
 [https://izumain.github.io/prompt-card-gacha/](https://izumain.github.io/prompt-card-gacha/)
 
@@ -46,3 +52,4 @@ Copyright (c) 2026 いずまいん / Izumain. All rights reserved.
 
 ### ⚖️ License
 Copyright (c) 2026 Izumain. All rights reserved.
+See LICENSE for details.
