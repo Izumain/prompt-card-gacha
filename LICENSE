@@ -1,1 +1,33 @@
-Copyright (c) 2026 Izumain. All rights reserved.
+PROMPT CARD GACHA - License
+Copyright (c) 2026 Izumain.
+
+--- 日本語 (Japanese) ---
+
+Personal Use Only（個人利用のみ）
+本ツールは、公式サイト（https://izumain.github.io/prompt-card-gacha/）上で、個人が非営利目的で利用することを許可します。
+※本リポジトリのソースコードの利用許諾ではありません。
+
+Prohibitions（禁止事項）
+作者の事前の書面による許可なく、以下を行うことを禁じます。
+・本ツールのソースコード、UIデザイン、文章・選択肢データ（カード内容等）の全部または一部の複製、改変、配布、公開
+・本ツールまたは派生物を、他サイト/他プラットフォームで再配布・再公開する行為
+・商用利用（広告・課金・販売・業務利用を含みます）
+
+No Warranty（無保証）
+本ツールは「現状有姿」で提供され、いかなる保証も行いません。本ツールの利用により生じたいかなる損害についても、作者は責任を負いません。
+
+
+--- English ---
+
+Personal Use Only
+You are permitted to use this tool for non-commercial personal purposes only via the official website (https://izumain.github.io/prompt-card-gacha/).
+This does not grant any license to use, copy, or modify the source code in this repository.
+
+Prohibitions
+Without prior written permission from the author, you may not:
+・Copy, modify, distribute, publish, or republish any part of the source code, UI design, or text/data (including card options)
+・Redistribute or host this tool or any derivative work on any other website or platform
+・Use this tool for any commercial purpose (including ads, paid services, or business use)
+
+No Warranty
+This tool is provided "AS IS" without warranty of any kind. The author shall not be liable for any damages or claims arising from the use of this tool.
