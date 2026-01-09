@@ -523,6 +523,24 @@
         gap: 8px;
     }
 
+    .next-step-box h4::before {
+        content: '→';
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .next-step-box strong {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    .next-step-box .note {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
     .gemini-link {
         color: var(--primary-color);
         text-decoration: none;
@@ -915,6 +933,7 @@
                     <li>AIの生成結果が第三者の著作権、パブリシティ権、その他の権利を侵害していないか、利用者の責任において確認してください。</li>
                     <li>各プラットフォーム（YouTube、TikTok等）のコミュニティガイドラインを遵守してください。AI生成コンテンツによるペナルティ等についても、制作者は一切の責任を負いません。</li>
                     <li>本ツールおよびAIによって生成された台本を使用して発生した、いかなる損害・不利益・トラブル（法的トラブルを含む）についても、制作者は一切の責任を負いません。最終的な投稿判断は、すべてユーザー自身の責任において行ってください。</li>
+                    <li>お問い合わせはXで受け付けていますが、個別返信や修正対応は保証できません。いただいた内容は参考にし、可能な範囲で確認・反映します。</li>
                 </ul>
             </div>
         </div>
@@ -1047,8 +1066,7 @@
         const defaultTarget = document.createElement('option');
         defaultTarget.value = "指定なし";
         defaultTarget.textContent = "指定なし";
-        // Explicitly set selected
-        defaultTarget.selected = true;
+        defaultTarget.selected = true; // Set selected attribute
         targetSel.appendChild(defaultTarget);
 
         targets.forEach(t => {
@@ -1062,7 +1080,7 @@
         const defaultAttr = document.createElement('option');
         defaultAttr.value = "指定なし";
         defaultAttr.textContent = "指定なし";
-        defaultAttr.selected = true;
+        defaultAttr.selected = true; // Set selected attribute
         attrSel.appendChild(defaultAttr);
 
         attributes.forEach(a => {
@@ -1081,7 +1099,7 @@
             const defaultOpt = document.createElement('option');
             defaultOpt.value = "";
             defaultOpt.textContent = "指定なし";
-            defaultOpt.selected = true;
+            defaultOpt.selected = true; // Set selected attribute
             sel.appendChild(defaultOpt);
 
             constraints.forEach(c => {
@@ -1126,8 +1144,9 @@
         const targetEl = document.getElementById('select-target');
         const attributeEl = document.getElementById('select-attribute');
         
-        const target = targetEl.value;
-        const attribute = attributeEl.value;
+        // Ensure values are retrieved
+        const target = targetEl ? targetEl.value : "指定なし";
+        const attribute = attributeEl ? attributeEl.value : "指定なし";
 
         // Get Constraint selections
         const c1 = document.getElementById('select-constraint-1').value;
@@ -1247,9 +1266,10 @@ ${sourceInstruction}
     }
 
     function copyToClipboard(elementId) {
-        const textarea = document.getElementById(elementId);
+        const text = document.getElementById(elementId).value;
         
         // iOS keyboard glitch prevention (if needed, but keeping it simple for now)
+        const textarea = document.getElementById(elementId);
         textarea.select();
         textarea.setSelectionRange(0, 99999); /* For mobile devices */
 
@@ -1273,8 +1293,11 @@ ${sourceInstruction}
     // Init
     window.addEventListener('DOMContentLoaded', () => {
         initSelects();
-        // Force initial generation to populate currentData
-        // We set locks temporarily to false just in case, though they start false
+        // **IMPORTANT**: Do NOT generate on load. Let the user click the button.
+        // This ensures they see the default values first.
+        // BUT, if you want initial values populated, call it here.
+        // Given the request was about "default values", it's safer to generate once
+        // so the cards aren't empty.
         generatePrompt(); 
         
         document.getElementById('btn-generate').addEventListener('click', generatePrompt);
