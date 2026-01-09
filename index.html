@@ -523,24 +523,6 @@
         gap: 8px;
     }
 
-    .next-step-box h4::before {
-        content: '→';
-        color: var(--primary-color);
-        font-weight: bold;
-    }
-
-    .next-step-box strong {
-        color: var(--primary-color);
-        font-weight: 700;
-    }
-
-    .next-step-box .note {
-        display: block;
-        margin-top: 8px;
-        font-size: 0.85rem;
-        color: var(--text-light);
-    }
-
     .gemini-link {
         color: var(--primary-color);
         text-decoration: none;
@@ -933,6 +915,13 @@
                     <li>AIの生成結果が第三者の著作権、パブリシティ権、その他の権利を侵害していないか、利用者の責任において確認してください。</li>
                     <li>各プラットフォーム（YouTube、TikTok等）のコミュニティガイドラインを遵守してください。AI生成コンテンツによるペナルティ等についても、制作者は一切の責任を負いません。</li>
                     <li>本ツールおよびAIによって生成された台本を使用して発生した、いかなる損害・不利益・トラブル（法的トラブルを含む）についても、制作者は一切の責任を負いません。最終的な投稿判断は、すべてユーザー自身の責任において行ってください。</li>
+                    <li>YouTube / TikTok / Gemini は各社の商標です。本ツールは各社と提携・承認されたものではありません。</li>
+                </ul>
+            </div>
+
+            <div class="disclaimer-section">
+                <span class="disclaimer-section-title">お問い合わせについて</span>
+                <ul class="disclaimer-list">
                     <li>お問い合わせはXで受け付けていますが、個別返信や修正対応は保証できません。いただいた内容は参考にし、可能な範囲で確認・反映します。</li>
                 </ul>
             </div>
@@ -1009,6 +998,8 @@
         hook: false
     };
 
+    // Store raw values (templates) here
+    // **重要**: ここで保持するのは「〇〇5選」などのテンプレート
     let currentData = {
         genre: "",
         theme: "",
@@ -1266,10 +1257,9 @@ ${sourceInstruction}
     }
 
     function copyToClipboard(elementId) {
-        const text = document.getElementById(elementId).value;
+        const textarea = document.getElementById(elementId);
         
         // iOS keyboard glitch prevention (if needed, but keeping it simple for now)
-        const textarea = document.getElementById(elementId);
         textarea.select();
         textarea.setSelectionRange(0, 99999); /* For mobile devices */
 
