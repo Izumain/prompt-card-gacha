@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROMPT CARD GACHA</title>
+<style>
+    :root {
+        /* 色定義 */
+        --primary-color: #26a69a; /* Teal/Mint */
+        --primary-dark: #00897b; /* 濃いめのティール（キャッチコピー用） */
+        --primary-light: #e0f2f1;
+        --primary-fade: rgba(38, 166, 154, 0.1);
+        
+        --text-main: #0f172a; /* 深いネイビーグレー */
+        --text-sub: #64748b;   /* 落ち着いたグレー */
+        --text-light: #94a3b8;
+        
+        --bg-color: #f8fafc;   /* 非常に薄い青みのあるグレー */
+        --card-bg: #ffffff;
+        --border-color: rgba(226, 232, 240, 0.8);
+        
+        /* 質感のある影 */
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.04);
+        --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -1px rgba(0,0,0,0.03);
+        --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+        --shadow-hover: 0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.03);
+        
+        --radius: 12px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Biz UDPGothic", "Yu Gothic", "YuGothic", Meiryo, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-size-adjust: 100%;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+    }
+
+    /* --- Header Design --- */
+    header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .catchphrase {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+        letter-spacing: 0.1em;
+        margin: 0 0 12px 0;
+        display: inline-block;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+        line-height: 1.2;
+        color: var(--text-main);
+        margin: 0 0 16px 0;
+        letter-spacing: 0.02em;
+        font-weight: 800;
+    }
+
+    .title-accent {
+        color: var(--primary-color);
+        font-weight: 800;
+    }
+
+    .subtitle-wrapper {
+        color: var(--text-sub);
+        font-size: 0.95rem; 
+        line-height: 1.6;
+        font-weight: 500;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .subtitle-text {
+        display: block;
+    }
+
+    /* --- Usage Box --- */
+    .usage-box {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--primary-color);
+        border-radius: var(--radius);
+        padding: 32px;
+        margin-bottom: 60px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .usage-top h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        margin-bottom: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .usage-top h3::before {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 6px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+    }
+
+    .usage-steps {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 12px;
+    }
+
+    .usage-steps li {
+        color: var(--text-sub);
+        font-weight: 500;
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .usage-divider {
+        height: 1px;
+        background-color: var(--border-color);
+        margin: 24px 0;
+        border: none;
+    }
+
+    .usage-note {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin: 0 0 6px 0;
+    }
+
+    /* --- Controls --- */
+    .controls-wrapper {
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .controls-row {
+        display: flex;
+        gap: 24px;
+        width: 100%;
+    }
+
+    .control-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-main);
+        letter-spacing: 0.02em;
+    }
+
+    select {
+        padding: 14px 16px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        background-color: var(--card-bg);
+        color: var(--text-main);
+        font-size: 1rem;
+        outline: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        width: 100%;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 16px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px var(--primary-fade);
+    }
+    
+    select:hover {
+        border-color: #cbd5e1;
+    }
+
+    select option:disabled {
+        color: #d1d5db;
+        background-color: #f1f5f9;
+    }
+
+    /* --- Instruction Text for Button --- */
+    .instruction-text {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .instruction-text p {
+        margin: 0;
+        font-weight: 700;
+        font-size: 1.0rem;
+        color: var(--text-main);
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+    }
+
+    /* --- Action Button --- */
+    .action-area {
+        margin-bottom: 30px;
+    }
+
+    .btn-generate {
+        width: 100%;
+        padding: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 1.15rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 6px -1px rgba(38, 166, 154, 0.4), 0 2px 4px -1px rgba(38, 166, 154, 0.2);
+        letter-spacing: 0.05em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-generate:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(38, 166, 154, 0.4), 0 4px 6px -2px rgba(38, 166, 154, 0.2);
+    }
+
+    .btn-generate:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+    
+    .btn-generate::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+        background-repeat: no-repeat;
+        background-position: 50%;
+        transform: scale(10, 10);
+        opacity: 0;
+        transition: transform .5s, opacity 1s;
+    }
+    
+    .btn-generate:active::after {
+        transform: scale(0, 0);
+        opacity: .3;
+        transition: 0s;
+    }
+
+    /* --- Variable Cards --- */
+    .cards-section {
+        margin-bottom: 10px;
+    }
+
+    .variable-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .card {
+        background: linear-gradient(145deg, #ffffff 0%, #f9fafb 100%);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 24px 16px;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 130px;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-hover);
+        border-color: #cbd5e1;
+    }
+
+    /* Locked State */
+    .card.locked {
+        border-color: var(--primary-color);
+        background: #f0fdfa;
+        box-shadow: inset 0 0 0 1px var(--primary-color), var(--shadow-sm);
+        transform: none;
+    }
+    .card.locked:hover {
+        box-shadow: inset 0 0 0 1px var(--primary-color), var(--shadow-sm);
+    }
+
+    /* Lock Icon */
+    .lock-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 18px;
+        height: 18px;
+        color: #cbd5e1;
+        transition: color 0.2s;
+    }
+
+    .card:hover .lock-indicator {
+        color: #94a3b8;
+    }
+
+    .card.locked .lock-indicator {
+        color: var(--primary-color);
+    }
+
+    .card-label {
+        font-size: 0.7rem;
+        color: var(--text-light);
+        margin-bottom: 12px;
+        display: block;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+    .card-value {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        line-height: 1.4;
+        word-break: break-all;
+        min-height: 1.4em; 
+    }
+
+    .cards-note {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        text-align: center;
+        margin: 0 0 50px 0;
+    }
+
+    /* --- Results --- */
+    .results-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        margin-bottom: 40px;
+    }
+
+    .result-panel {
+        display: flex;
+        flex-direction: column;
+        background: var(--card-bg);
+        padding: 32px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-md);
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .result-panel:hover {
+        box-shadow: var(--shadow-lg);
+    }
+
+    .panel-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .accent-line {
+        width: 4px;
+        height: 24px;
+        background-color: var(--primary-color);
+        margin-right: 12px;
+        border-radius: 2px;
+    }
+
+    .panel-title {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        letter-spacing: 0.02em;
+    }
+
+    .textarea-wrapper {
+        position: relative;
+    }
+
+    textarea {
+        width: 100%;
+        height: 400px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.8;
+        letter-spacing: 0.03em;
+        resize: vertical;
+        background-color: #fafafa;
+        color: var(--text-main);
+        transition: all 0.2s;
+        margin-bottom: 20px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background-color: #fff;
+        box-shadow: 0 0 0 3px var(--primary-fade);
+    }
+
+    .btn-copy {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 24px;
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-sub);
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        align-self: flex-start;
+        transition: all 0.2s;
+        min-width: 120px;
+    }
+
+    .btn-copy:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background-color: var(--primary-fade);
+    }
+    
+    .btn-copy.copied {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
+    }
+
+    /* --- Next Step Box --- */
+    .next-step-box {
+        background-color: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 60px;
+        color: var(--text-sub);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        border-left: 4px solid #cbd5e1;
+    }
+
+    .next-step-box h4 {
+        margin: 0 0 10px 0;
+        font-size: 1rem;
+        color: var(--text-main);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .gemini-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 700;
+        border-bottom: 1.5px solid var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: opacity 0.2s;
+    }
+
+    .gemini-link:hover {
+        opacity: 0.7;
+    }
+
+    .external-icon {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        stroke-width: 2.5;
+        fill: none;
+    }
+
+    /* --- Toast Notification --- */
+    .toast-container {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background-color: rgba(33, 33, 33, 0.95);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .toast-container.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .toast-icon {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: var(--primary-color);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* --- Footer --- */
+    footer {
+        border-top: 1px solid var(--border-color);
+        padding-top: 60px;
+        padding-bottom: 40px;
+        font-size: 0.85rem;
+        color: var(--text-light);
+    }
+
+    .disclaimer-box {
+        margin-bottom: 30px;
+        line-height: 1.8;
+        color: var(--text-sub);
+    }
+
+    .disclaimer-header {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        color: var(--text-main);
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+    
+    .disclaimer-section {
+        margin-bottom: 20px;
+    }
+    
+    .disclaimer-section-title {
+        font-weight: 700;
+        color: var(--text-main);
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 8px;
+        border-left: 3px solid #cbd5e1;
+        padding-left: 8px;
+    }
+    
+    .disclaimer-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .disclaimer-list li {
+        position: relative;
+        padding-left: 1em;
+        margin-bottom: 6px;
+        font-size: 0.85rem;
+    }
+    
+    .disclaimer-list li::before {
+        content: "・";
+        position: absolute;
+        left: 0;
+        color: var(--text-light);
+    }
+
+    .copyright {
+        text-align: center;
+        margin-top: 40px;
+        color: var(--text-light);
+        font-weight: 500;
+    }
+    
+    .contact-area {
+        text-align: center;
+        margin-top: 16px;
+    }
+    
+    .contact-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: opacity 0.2s;
+    }
+    
+    .contact-link:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+        .container {
+            padding: 24px 20px;
+        }
+
+        .catchphrase {
+            font-size: 1.1rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+        }
+
+        .subtitle-wrapper {
+            font-size: 0.9rem;
+        }
+
+        .controls-row {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .variable-cards {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .card {
+            padding: 20px 12px;
+            min-height: 100px;
+        }
+        
+        .card-value {
+            font-size: 1rem;
+        }
+
+        .results-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header>
+        <p class="catchphrase">アイデア0からの台本生成</p>
+        <h1>PROMPT CARD <span class="title-accent">GACHA</span></h1>
+        <div class="subtitle-wrapper">
+            <span class="subtitle-text">カードガチャ1回、1分でネタ切れ解消</span>
+            <span class="subtitle-text">YouTubeショート・TikTok動画台本制作用</span>
+            <span class="subtitle-text">プロンプトメーカー</span>
+        </div>
+    </header>
+
+    <!-- Usage Box -->
+    <div class="usage-box">
+        <div class="usage-top">
+            <h3>簡単な使い方</h3>
+            <ul class="usage-steps">
+                <li>① ターゲット・属性・制約を選ぶ</li>
+                <li>② カードガチャでプロンプトを生成</li>
+                <li>③ ランダムで台本の内容が決まる</li>
+                <li>④ プロンプトをコピー</li>
+                <li>⑤ AI（Gemini）のチャットに貼る</li>
+                <li>⑥ 台本が完成</li>
+            </ul>
+        </div>
+        <hr class="usage-divider">
+        <div class="usage-bottom">
+            <p class="usage-note">※AIの生成後は、必ずご自身で情報の再確認をお願いします。</p>
+            <p class="usage-note">※台本はあくまで下書き・叩き台用です。必ず自分の言葉で清書してください。</p>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-wrapper">
+        <!-- Target Selection -->
+        <div class="controls-row">
+            <div class="control-group">
+                <label for="select-target">ターゲット（年齢×性別）</label>
+                <select id="select-target"></select>
+            </div>
+            <div class="control-group">
+                <label for="select-attribute">属性（ターゲットのタイプ）</label>
+                <select id="select-attribute"></select>
+            </div>
+        </div>
+
+        <!-- Constraint Selection -->
+        <div class="control-group">
+            <label>制約（文章の味付け / 最大3つ）</label>
+            <div class="controls-row">
+                <select id="select-constraint-1">
+                    <option value="">指定なし</option>
+                </select>
+                <select id="select-constraint-2">
+                    <option value="">指定なし</option>
+                </select>
+                <select id="select-constraint-3">
+                    <option value="">指定なし</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Text for Button -->
+    <div class="instruction-text">
+        <p>プロンプト生成をクリック</p>
+        <p>ランダムで台本の内容が決まります。</p>
+    </div>
+
+    <!-- Main Button -->
+    <div class="action-area">
+        <button id="btn-generate" class="btn-generate">プロンプト生成</button>
+    </div>
+
+    <!-- Variable Cards -->
+    <div class="cards-section">
+        <div class="variable-cards">
+            <!-- Card 1: Genre -->
+            <div class="card" id="card-genre" onclick="toggleLock('genre')">
+                <div class="lock-indicator" id="lock-icon-genre">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+                <span class="card-label">ジャンル</span>
+                <span class="card-value" id="val-genre">-</span>
+            </div>
+            
+            <!-- Card 2: Theme -->
+            <div class="card" id="card-theme" onclick="toggleLock('theme')">
+                <div class="lock-indicator" id="lock-icon-theme">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+                <span class="card-label">テーマ</span>
+                <span class="card-value" id="val-theme">-</span>
+            </div>
+            
+            <!-- Card 3: Angle -->
+            <div class="card" id="card-angle" onclick="toggleLock('angle')">
+                <div class="lock-indicator" id="lock-icon-angle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+                <span class="card-label">切り口</span>
+                <span class="card-value" id="val-angle">-</span>
+            </div>
+            
+            <!-- Card 4: Hook -->
+            <div class="card" id="card-hook" onclick="toggleLock('hook')">
+                <div class="lock-indicator" id="lock-icon-hook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                    </svg>
+                </div>
+                <span class="card-label">フック</span>
+                <span class="card-value" id="val-hook">-</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lock Note -->
+    <p class="cards-note">※カードをクリックするとロックされます。</p>
+
+    <!-- Results -->
+    <div class="results-grid">
+        <!-- YouTube Shorts -->
+        <div class="result-panel">
+            <div class="panel-header">
+                <div class="accent-line"></div>
+                <div class="panel-title">YouTube Shorts用プロンプト</div>
+            </div>
+            <textarea id="out-yt" readonly></textarea>
+            <button class="btn-copy" onclick="copyToClipboard('out-yt')">コピーする</button>
+        </div>
+
+        <!-- TikTok -->
+        <div class="result-panel">
+            <div class="panel-header">
+                <div class="accent-line"></div>
+                <div class="panel-title">TikTok用プロンプト</div>
+            </div>
+            <textarea id="out-tt" readonly></textarea>
+            <button class="btn-copy" onclick="copyToClipboard('out-tt')">コピーする</button>
+        </div>
+    </div>
+
+    <!-- Next Step Box -->
+    <div class="next-step-box">
+        <h4>→ Next Step</h4>
+        <p>
+            コピーしたプロンプトを 
+            <a href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer" class="gemini-link">
+                Gemini
+                <svg class="external-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a> 
+            のチャット画面に貼り付けて <strong>送信（実行）</strong> してください。台本が生成されます。
+        </p>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast" class="toast-container">
+        <svg class="toast-icon" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>コピーしました！</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="disclaimer-box">
+            <div class="disclaimer-header">【利用規約・免責事項】</div>
+            
+            <div class="disclaimer-section">
+                <span class="disclaimer-section-title">著作権・利用規約について</span>
+                <ul class="disclaimer-list">
+                    <li>本アプリの著作権は「© いずまいん /Izumain」に帰属します。</li>
+                    <li>本アプリのプログラムコード、デザイン、および独自のアイデアを、事前の許可なく転載・再配布・模倣することを禁じます。</li>
+                </ul>
+            </div>
+
+            <div class="disclaimer-section">
+                <span class="disclaimer-section-title">本ツールについて</span>
+                <ul class="disclaimer-list">
+                    <li>本ツールはAIへの指示書（プロンプト）を生成するものであり、生成される台本の内容を保証するものではありません。</li>
+                </ul>
+            </div>
+
+            <div class="disclaimer-section">
+                <span class="disclaimer-section-title">ファクトチェックの推奨</span>
+                <ul class="disclaimer-list">
+                    <li>AIが生成する回答には誤りが含まれる可能性があります。必ず人間が事実関係を確認（ファクトチェック）し、自身の言葉で加筆・修正を行ってください。</li>
+                </ul>
+            </div>
+
+            <div class="disclaimer-section">
+                <span class="disclaimer-section-title">権利・責任について</span>
+                <ul class="disclaimer-list">
+                    <li>AIの生成結果が第三者の著作権、パブリシティ権、その他の権利を侵害していないか、利用者の責任において確認してください。</li>
+                    <li>各プラットフォーム（YouTube、TikTok等）のコミュニティガイドラインを遵守してください。AI生成コンテンツによるペナルティ等についても、制作者は一切の責任を負いません。</li>
+                    <li>本ツールおよびAIによって生成された台本を使用して発生した、いかなる損害・不利益・トラブル（法的トラブルを含む）についても、制作者は一切の責任を負いません。最終的な投稿判断は、すべてユーザー自身の責任において行ってください。</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2026 いずまいん /Izumain. All Rights Reserved.
+        </div>
+        
+        <div class="contact-area">
+            お問い合わせは<a href="https://x.com/izu_main?s=21&t=dkvqtxy2ZtpE9_zm8tDGZw" target="_blank" class="contact-link"><strong>こちら</strong></a>から
+        </div>
+    </footer>
+</div>
+
+<script>
+    // --- Data Definition ---
+    const targets = [
+        "10代〜20代男性", "30代〜50代男性", "60代以上男性",
+        "10代〜20代女性", "30代〜50代女性", "60代以上女性", "その他"
+    ];
+
+    const attributes = [
+        "学生", "会社員", "主婦/主夫", "起業家", "ズボラな人",
+        "努力家", "雑学好き", "暇つぶし勢"
+    ];
+
+    const genres = [
+        "歴史","雑学","人間心理","お金","恋愛","仕事","科学","宇宙","動物","食べ物",
+        "健康","学校","日本文化","世界の違い","昔話","都市伝説（軽め）","ライフハック","失敗談","成功者の共通点","意外な事実",
+        "日常の闇","AI","テクノロジー","映画","アニメ","ゲーム","名言","ビジネス","副業","投資（超ライト）",
+        "歴史上の人物","文化の違い","日本だけの習慣","海外では常識","子供あるある","大人あるある","男と女の違い","勘違いされがちなこと","実は意味がある行動","知ると得する話",
+        "知らなくても困らない話","無駄に役立つ知識","怖くないホラー","ブラックジョーク","ネットミーム解説","都会あるある","田舎あるある","昭和 vs 現代","習慣","言葉"
+    ];
+
+    const themes = [
+        "スイーツ","学校給食","コンビニ","電車","スマホ","トイレ","エレベーター","お風呂","お金の使い方","貯金",
+        "借金","仕事のミス","会話","LINE","初対面","デート","失恋","結婚","上司","部下",
+        "勉強","テスト","成績","健康診断","睡眠","夢","習慣","ルール","マナー","言葉",
+        "日本語","英語","名前","年齢","時間","休日","朝","夜","雨の日","暑さ",
+        "寒さ","食べ方","飲み物","匂い","音","色","数字","場所","家","職場"
+    ];
+
+    const angles = [
+        "◯◯5選","◯◯3選","実は知られていない","99%が誤解している","意外と知らない","昔は◯◯だった","今では考えられない","日本だけ","海外では常識","大人になって気づく",
+        "子供の頃は分からなかった","実は逆","勘違いされがち","やってはいけない","やると損する","やると得する","知ってるとドヤれる","無駄に役立つ","ほぼ意味ない","意味がある行動",
+        "実は怖い","実は闇が深い","裏の理由","本当の理由","なぜ◯◯なのか","そもそも◯◯とは","一瞬で分かる","30秒で分かる","知らないと恥ずかしい","知らなくていいけど",
+        "実は間違っている","よくある勘違い","みんなやってるけど","常識だと思ってたけど","当たり前すぎて気づかない","一度知ると戻れない","人に言いたくなる","誰かに教えたくなる","今日から使える","明日には忘れる",
+        "昔の人は天才","今のほうが不便","技術の進化","人間の本能","脳のバグ","心理トリック","なぜ流行った？","なぜ廃れた？","実は損してる","意外な共通点"
+    ];
+
+    const hooks = [
+        "これ、知ってたらヤバい", "実はこれ、間違ってます", "ほとんどの人が知らないんだけど", "これ、学校では教えてくれない", "一度聞いたら忘れられない",
+        "昔の人、頭おかしい（褒めてる）", "今だと炎上する話", "これ、海外では常識", "日本だけおかしい", "知らなくていいけど、知るとモヤる",
+        "これ、誰も疑ってないけど", "みんな当たり前だと思ってるけど", "正直、どうでもいいけど", "これ、地味に怖い", "知った瞬間、見方が変わる",
+        "これ、実は理由があります", "3秒でわかる結論から言うね", "これ、やってる人多いけど危ない", "実は、損してる人が多い", "結論：ほとんどの人が勘違いしてる",
+        "これ知ってるだけで会話強くなる", "知らないままだと地味に損", "みんな同じミスしてる", "「それ」やる人、だいたい同じ", "これ、統計的にこうなる",
+        "え、まだ信じてるの？", "実は答えはシンプル", "1個だけ覚えて帰って", "最後にオチがある", "実は重要な話"
+    ];
+
+    const constraints = [
+        "専門用語禁止", "小学生でも分かる言葉", "数字は必ず使う",
+        "比喩禁止", "感情語禁止", "断定口調で書く", "疑問形禁止", "説明しすぎない",
+        "結論を先に言う", "オチをつけない", "怖がらせない", "煽りすぎない", "事実っぽく書く",
+        "会話調禁止", "ナレーション前提", "字幕前提", "読み上げやすく", "間を意識する",
+        "単語の繰り返し禁止", "固有名詞を出しすぎない", "30秒でも成立する密度", "余計な前置き禁止", "最後は一文で締める"
+    ];
+
+    // --- State Management ---
+    const locks = {
+        genre: false,
+        theme: false,
+        angle: false,
+        hook: false
+    };
+
+    // Store raw values (templates) here
+    // **重要**: ここで保持するのは「〇〇5選」などのテンプレート
+    let currentData = {
+        genre: "",
+        theme: "",
+        angle: "", 
+        hook: ""
+    };
+
+    // --- Logic ---
+
+    function getRandom(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function updateConstraintOptions() {
+        const selects = [
+            document.getElementById('select-constraint-1'),
+            document.getElementById('select-constraint-2'),
+            document.getElementById('select-constraint-3')
+        ];
+
+        // Collect currently selected values (excluding empty string)
+        const selectedValues = selects.map(s => s.value).filter(v => v !== "");
+
+        selects.forEach(currentSelect => {
+            const currentVal = currentSelect.value;
+            // List of values selected in OTHER dropdowns
+            const otherSelectedValues = selectedValues.filter(v => v !== currentVal);
+
+            Array.from(currentSelect.options).forEach(option => {
+                if (option.value === "") {
+                    option.disabled = false;
+                    return;
+                }
+
+                if (otherSelectedValues.includes(option.value)) {
+                    option.disabled = true;
+                } else {
+                    option.disabled = false;
+                }
+            });
+        });
+    }
+
+    function initSelects() {
+        const targetSel = document.getElementById('select-target');
+        const attrSel = document.getElementById('select-attribute');
+        
+        const constraintSels = [
+            document.getElementById('select-constraint-1'),
+            document.getElementById('select-constraint-2'),
+            document.getElementById('select-constraint-3')
+        ];
+
+        targets.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t;
+            opt.textContent = t;
+            targetSel.appendChild(opt);
+        });
+
+        attributes.forEach(a => {
+            const opt = document.createElement('option');
+            opt.value = a;
+            opt.textContent = a;
+            attrSel.appendChild(opt);
+        });
+
+        constraintSels.forEach(sel => {
+            constraints.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c;
+                sel.appendChild(opt);
+            });
+            sel.addEventListener('change', updateConstraintOptions);
+        });
+        
+        updateConstraintOptions();
+    }
+
+    // --- Lock Toggle Function ---
+    function toggleLock(type) {
+        locks[type] = !locks[type];
+        const card = document.getElementById(`card-${type}`);
+        const iconContainer = document.getElementById(`lock-icon-${type}`);
+        
+        if (locks[type]) {
+            card.classList.add('locked');
+            iconContainer.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            `;
+        } else {
+            card.classList.remove('locked');
+            iconContainer.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                </svg>
+            `;
+        }
+    }
+
+    function generatePrompt() {
+        // Get user selection
+        const target = document.getElementById('select-target').value;
+        const attribute = document.getElementById('select-attribute').value;
+
+        // Get Constraint selections
+        const c1 = document.getElementById('select-constraint-1').value;
+        const c2 = document.getElementById('select-constraint-2').value;
+        const c3 = document.getElementById('select-constraint-3').value;
+        
+        let selectedConstraints = [c1, c2, c3].filter(c => c !== "").join("、");
+        if (selectedConstraints === "") {
+            selectedConstraints = "特になし";
+        }
+
+        // --- Core Logic: Update ONLY raw currentData if not locked ---
+        if (!locks.genre) currentData.genre = getRandom(genres);
+        if (!locks.theme) currentData.theme = getRandom(themes);
+        if (!locks.angle) currentData.angle = getRandom(angles);
+        if (!locks.hook) currentData.hook = getRandom(hooks);
+
+        // --- Prepare Display Values (Replace placeholders dynamically) ---
+        // UI Display Values (KEEP TEMPLATE for Angle)
+        const displayGenre = currentData.genre;
+        const displayTheme = currentData.theme;
+        const displayAngle = currentData.angle; // Display the raw template (e.g., "◯◯5選")
+        const displayHook = currentData.hook;
+
+        // Prompt Values (Replace ◯◯ with Theme)
+        const promptAngle = currentData.angle.replace(/◯◯/g, displayTheme); 
+
+        // Update UI cards with Display values (Raw Template for Angle)
+        document.getElementById('val-genre').textContent = displayGenre;
+        document.getElementById('val-theme').textContent = displayTheme;
+        document.getElementById('val-angle').textContent = displayAngle;
+        document.getElementById('val-hook').textContent = displayHook;
+
+        // Basic Info Block
+        const infoBlock = `
+【ターゲット】${target}
+【属性】${attribute}
+【ジャンル】${displayGenre}
+【テーマ】${displayTheme}
+【切り口】${promptAngle}
+【フック】${displayHook}
+【制約】${selectedConstraints}
+【尺/文字数】60秒以内 / 320文字程度
+【形式指定】
+・シーンの切り替わりごとに【00:00】形式のタイムスタンプを入れる
+・タイムスタンプの前には空行を入れ、視認性を確保する
+・各シーンのナレーションは、内容が薄くならないよう具体的かつ魅力的に記述する
+・単なる箇条書きではなく、文脈のつながりを意識した構成にする
+【禁止事項】
+・長すぎる説明
+・専門用語の多用
+・冗長な前置き
+`.trim();
+
+        // Structure Selection Instruction
+        const structureInstruction = `
+カードの組み合わせにそれに合うよう、
+以下の三つの方法を１つ選んで書いてください
+• PREP法： 結論 → 理由 → 具体例 → 結論（雑学系）
+• ギャップ法： 常識の否定 → 意外な真実 → 解説（驚き系）
+• カウントダウン法： 第3位…第2位…（ランキング系）
+`.trim();
+
+        // Source Instruction
+        const sourceInstruction = `
+【情報のソース】
+情報の正確性を確認するため、使用した情報の出典（ソース）を必ず明記してください。
+出典が確実に言えない情報は断定しない。必要なら「要ファクトチェック」と書いてください。
+`.trim();
+
+        // -----------------------
+        // YouTube Shorts Prompt
+        // -----------------------
+        const promptYT = `
+あなたはYouTube Shorts専門のプロの台本ライターです。
+以下の条件で台本を書いてください。
+
+${infoBlock}
+
+${structureInstruction}
+
+${sourceInstruction}
+
+それでは台本を書いてください。
+`.trim();
+
+        // -----------------------
+        // TikTok Prompt
+        // -----------------------
+        const promptTT = `
+あなたはTikTok専門のプロの台本ライターです。
+以下の条件で台本を書いてください。
+テンポ重視、短く強い文で。
+
+${infoBlock}
+
+${structureInstruction}
+
+${sourceInstruction}
+
+それでは台本を作成してください。
+`.trim();
+
+        // Set to textareas
+        document.getElementById('out-yt').value = promptYT;
+        document.getElementById('out-tt').value = promptTT;
+    }
+
+    // --- Toast Notification Logic ---
+    function showToast() {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 1500); // Hide after 1.5 seconds
+    }
+
+    async function copyToClipboard(elementId) {
+        const text = document.getElementById(elementId).value;
+        
+        try {
+            if (navigator.clipboard) {
+                await navigator.clipboard.writeText(text);
+            } else {
+                // Fallback
+                const textarea = document.getElementById(elementId);
+                textarea.select();
+                document.execCommand('copy');
+            }
+            // Show Toast
+            showToast();
+            
+        } catch (err) {
+            console.error('Copy failed', err);
+            alert("コピーに失敗しました。");
+        }
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+        initSelects();
+        // Force initial generation to populate currentData
+        // We set locks temporarily to false just in case, though they start false
+        generatePrompt(); 
+        
+        document.getElementById('btn-generate').addEventListener('click', generatePrompt);
+    });
+
+</script>
+</body>
+</html>
